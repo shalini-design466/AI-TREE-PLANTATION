@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Species Catalog — AI Tree Plantation Recommendation System</title>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="vendor/chart.umd.min.js"></script>
+    <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
+    <link rel="stylesheet" href="css/style.css?v=20">
+    <link rel="stylesheet" href="css/theme.css?v=4">
+</head>
+<body class="theme-std">
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>🌳 AI Tree Plantation <span>commercial</span></h1>
+                <div class="subtitle">Recommendation System</div>
+            </div>
+            <nav class="nav-tabs" id="navTabs">
+<button class="" data-page="page-home" onclick="navigateTo('page-home')"><i class="fas fa-home"></i> Home</button>
+<button class="" data-page="page-register" onclick="navigateTo('page-register')"><i class="fas fa-user-plus"></i> Register</button>
+<button class="" data-page="page-login" onclick="navigateTo('page-login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+<button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+<button class="active" data-page="page-catalog" onclick="navigateTo('page-catalog')"><i class="fas fa-book"></i> Species</button>
+<button class="" data-page="page-workspace" onclick="navigateTo('page-workspace')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+</nav>
+        </header>
+        <section class="page active" id="page-catalog">
+<div class="card">
+<div class="card-title"><i class="fas fa-book"></i> Commercial Tree Species Catalog</div>
+<p class="catalog-intro">Explore our curated collection of <strong>commercial plantation species</strong> with real species photographs.</p>
+<div id="soilTopPicksCatalog"></div>
+<div class="catalog-filters">
+<div class="filter-group">
+<label>Filter by Region:</label>
+<select id="catalogFilter">
+<option value="all">All Regions</option>
+<option value="tropical">Tropical</option>
+<option value="subtropical">Subtropical</option>
+<option value="arid">Arid</option>
+</select>
+</div>
+<div class="filter-group">
+<label>Sort by:</label>
+<select id="catalogSort">
+<option value="name">Name</option>
+<option value="value">Commercial Value</option>
+<option value="maturity">Maturity (years)</option>
+</select>
+</div>
+<div class="search-box">
+<input id="catalogSearch" placeholder="Search species..." type="text"/>
+<i class="fas fa-search"></i>
+</div>
+</div>
+<div class="species-grid" id="speciesGrid"></div>
+</div>
+</section>
+        <footer class="footer-note">🌿 AI Tree Plantation Recommendation System — Commercial plantation planning. Species photographs are linked from Wikimedia Commons; license/attribution belongs to each source file.</footer>
+    </div>
+    <script src="js/species-knowledge.js?v=20"></script>
+    <script src="js/spacing-guide.js?v=1"></script>
+    <script src="js/lang-species.js?v=20"></script>
+    <script src="js/lang.js?v=20"></script>
+    <script src="js/script.js?v=20"></script>
+    <script src="js/chatbot.js?v=20"></script>
+</body>
+</html>

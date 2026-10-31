@@ -1,0 +1,14 @@
+{
+  "random_state": 42,
+  "test_size_fraction": 0.2,
+  "n_train_rows": 1736,
+  "n_test_rows": 434,
+  "train_accuracy": 0.9954,
+  "test_accuracy_overall": 0.9793,
+  "test_accuracy_synthetic_species_only": 0.9753,
+  "test_accuracy_real_kaggle_species_only": 1.0,
+  "n_species_total": 31,
+  "n_species_real_kaggle": 5,
+  "n_species_synthetic_only": 26,
+  "caveat": "26 of 31 species have no real-world (Kaggle) rows in this dataset -- their feature ranges were synthetically generated with little to no overlap between species, which inflates accuracy on those species relative to what a real deployment would likely see. Treat test_accuracy_real_kaggle_species_only as the more trustworthy figure and test_accuracy_overall as optimistic."
+}

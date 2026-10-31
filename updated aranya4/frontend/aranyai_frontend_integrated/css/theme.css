@@ -1,0 +1,40 @@
+/* AranyaAI standard colour theme — "Autumn Maple".
+   Used on Login, Register, Species and Admin pages ONLY (Home and Dashboard keep their own look).
+   To change the whole theme, edit these variables. */
+body.theme-std{
+  --t-primary:#9c2a2a; --t-primary-dark:#3a1414; --t-primary-hover:#7d1f1f;
+  --t-accent:#e08a1e; --t-bg:#fbf1e6; --t-soft:#f3dfc8; --t-soft2:#ecd0b0;
+  --t-border:#e6cfb4; --t-text:#3a1414; --t-muted:#6b4423;
+}
+body.theme-std{background:linear-gradient(180deg,#f7e6d2 0%,var(--t-bg) 240px,var(--t-bg) 100%)!important;color:var(--t-text)}
+body.theme-std .header{background:var(--t-soft)}
+body.theme-std .logo h1{color:var(--t-primary-dark)}
+body.theme-std .logo h1 span{background:var(--t-primary)}
+body.theme-std .subtitle{color:var(--t-muted)}
+body.theme-std .nav-tabs{background:var(--t-soft2)}
+body.theme-std .nav-tabs button,body.theme-std .nav-tabs .nav-link-button{color:var(--t-primary-dark)}
+body.theme-std .nav-tabs button.active,body.theme-std .nav-tabs .nav-link-button.active{background:#fff;color:var(--t-primary-dark);box-shadow:0 2px 8px rgba(58,20,20,.12)}
+body.theme-std .card,body.theme-std .species-card,body.theme-std .mini-species-card{border-color:var(--t-border);box-shadow:0 8px 24px rgba(58,20,20,.06)}
+body.theme-std .card-title,body.theme-std .species-card h3,body.theme-std h2,body.theme-std .mini-species-card .name{color:var(--t-primary-dark)}
+body.theme-std .input-group label,body.theme-std .auth-switch,body.theme-std .catalog-intro,body.theme-std .species-card .species-details p,body.theme-std .filter-group label{color:var(--t-muted)}
+body.theme-std .input-group input,body.theme-std .input-group select,body.theme-std .auth-form .input-group input,body.theme-std .auth-form .input-group select,body.theme-std .search-box input,body.theme-std .catalog-filters select{border-color:var(--t-border);background:#fffaf4}
+body.theme-std .input-group input:focus,body.theme-std .input-group select:focus,body.theme-std .search-box input:focus{border-color:var(--t-primary);box-shadow:0 0 0 3px rgba(156,42,42,.18)}
+body.theme-std .btn,body.theme-std .btn-primary{background:var(--t-primary);color:#fff}
+body.theme-std .btn:hover,body.theme-std .btn-primary:hover{background:var(--t-primary-hover);box-shadow:0 4px 12px rgba(156,42,42,.3)}
+body.theme-std .btn-outline{background:transparent;border:2px solid var(--t-primary);color:var(--t-primary)}
+body.theme-std .btn-outline:hover{background:var(--t-soft)}
+body.theme-std .btn-secondary{background:var(--t-accent);color:#fff}
+body.theme-std .auth-switch a,body.theme-std a.link-btn,body.theme-std .link-btn{color:var(--t-primary)}
+body.theme-std .species-card .species-tags span{background:var(--t-soft);color:var(--t-primary-dark)}
+body.theme-std .species-card .species-details i{color:var(--t-primary)}
+body.theme-std .species-card .species-image-wrap,body.theme-std .mini-species-card img{background:var(--t-soft)}
+body.theme-std .footer-note{color:var(--t-muted)}
+body.theme-std .user-session-pill,body.theme-std .logout-btn{border-color:var(--t-border);color:var(--t-primary-dark)}
+body.theme-std .aranya-language{border-color:var(--t-border)}
+body.theme-std .forgot-password,body.theme-std a.forgot-password{color:var(--t-primary)!important}
+body.theme-std .btn,body.theme-std .btn-primary{box-shadow:0 5px 0 #6e1c1c,0 12px 22px rgba(58,20,20,.18)}
+body.theme-std .btn:hover,body.theme-std .btn-primary:hover{box-shadow:0 6px 0 #5a1616,0 13px 22px rgba(58,20,20,.22)!important}
+body.theme-std .btn:active{box-shadow:0 2px 0 #5a1616,0 5px 10px rgba(58,20,20,.15)!important}
+body.theme-std .btn-outline{box-shadow:none}
+body.theme-std .header{box-shadow:0 6px 18px rgba(58,20,20,.08)}
+body.theme-std .app::before,body.theme-std .app::after{display:none}

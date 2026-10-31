@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AranyaAI — Admin Command Center</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="css/style.css?v=20">
+<link rel="stylesheet" href="css/admin.css?v=4">
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+<header class="admin-topbar">
+  <div class="admin-brand"><div class="admin-logo">🌳</div><div><strong>AranyaAI</strong><span>Admin Command Center</span></div></div>
+  <div class="admin-top-actions"><div class="admin-status"><span class="status-dot"></span> System Online</div><div id="adminNamePill" class="admin-name-pill"><i class="fas fa-user-shield"></i> Admin</div><button id="adminLogoutBtn" class="icon-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></button></div>
+</header>
+<div class="admin-layout">
+<aside class="admin-sidebar">
+  <div class="side-section-title">CONTROL CENTER</div>
+  <button class="admin-nav active" data-section="overview"><i class="fas fa-gauge-high"></i><span>Dashboard</span></button>
+  <button class="admin-nav" data-section="species"><i class="fas fa-seedling"></i><span>Species Management</span></button>
+  <button class="admin-nav" data-section="users"><i class="fas fa-users"></i><span>User Management</span></button>
+  <button class="admin-nav" data-section="reports"><i class="fas fa-file-chart-column"></i><span>Reports & Analytics</span></button>
+  <button class="admin-nav" data-section="settings"><i class="fas fa-sliders"></i><span>Settings</span></button>
+  <div class="sidebar-tip"><i class="fas fa-lightbulb"></i><strong>Admin insight</strong><p>Monitor adoption, recommendations, species demand and recent activity from one place.</p></div>
+</aside>
+<main class="admin-main">
+<section id="section-overview" class="admin-section active">
+  <div class="section-heading"><div><span class="eyebrow">ADMIN OVERVIEW</span><h1>Plantation Intelligence Dashboard</h1><p>Understand how users are using AranyaAI and which commercial species are most in demand.</p></div><button class="refresh-btn" id="refreshOverview"><i class="fas fa-sync-alt"></i> Refresh</button></div>
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-green"><div class="kpi-icon"><i class="fas fa-users"></i></div><div><span>Total Users</span><strong id="statUsers">—</strong><small id="statActive">— active today</small></div></div>
+    <div class="kpi-card kpi-blue"><div class="kpi-icon"><i class="fas fa-brain"></i></div><div><span>AI Recommendations</span><strong id="statRecommendations">—</strong><small>recorded recommendation sessions</small></div></div>
+    <div class="kpi-card kpi-orange"><div class="kpi-icon"><i class="fas fa-tree"></i></div><div><span>Top Commercial Tree</span><strong id="statTopSpecies">—</strong><small id="statTopSpeciesCount">most recommended</small></div></div>
+    <div class="kpi-card kpi-purple"><div class="kpi-icon"><i class="fas fa-layer-group"></i></div><div><span>Plantation Plans</span><strong id="statPlans">—</strong><small>layout calculations recorded</small></div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="admin-panel chart-panel"><div class="panel-heading"><div><h3>User Activity Trend</h3><span>Last 14 days</span></div><i class="fas fa-chart-line"></i></div><div class="chart-box"><canvas id="activityChart"></canvas></div></div>
+    <div class="admin-panel chart-panel"><div class="panel-heading"><div><h3>Most Recommended Species</h3><span>AI recommendation demand</span></div><i class="fas fa-ranking-star"></i></div><div class="chart-box"><canvas id="speciesChart"></canvas></div></div>
+  </div>
+  <div class="insight-grid">
+    <div class="admin-panel"><div class="panel-heading"><div><h3>User Behaviour</h3><span>What people are doing</span></div><i class="fas fa-chart-pie"></i></div><div class="chart-box small"><canvas id="actionChart"></canvas></div></div>
+    <div class="admin-panel"><div class="panel-heading"><div><h3>Quick Insights</h3><span>Automatically calculated</span></div><i class="fas fa-wand-magic-sparkles"></i></div><div id="insightList" class="insight-list"></div></div>
+  </div>
+  <div class="admin-panel"><div class="panel-heading"><div><h3>Recent User Activity</h3><span>Latest 10 events</span></div><i class="fas fa-clock-rotate-left"></i></div><div id="recentActivity" class="activity-list"></div></div>
+</section>
+<section id="section-species" class="admin-section">
+  <div class="section-heading"><div><span class="eyebrow">CATALOG CONTROL</span><h1>Species Management</h1><p>Review and update commercial species information used throughout AranyaAI.</p></div></div>
+  <div class="species-admin-toolbar"><input id="speciesSearch" placeholder="Search species..."><select id="speciesFilter"><option value="all">All categories</option><option value="long_term">Long term</option><option value="annuity">Annuity</option><option value="three_month">Short duration</option></select></div>
+  <div id="speciesAdminGrid" class="species-admin-grid"></div>
+</section>
+<section id="section-users" class="admin-section">
+  <div class="section-heading"><div><span class="eyebrow">ACCOUNT CONTROL</span><h1>User Management</h1><p>Review registered users, purposes, regions and account roles.</p></div><div class="user-count-badge" id="userCountBadge">— accounts</div></div>
+  <div class="admin-panel table-panel"><div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Purpose</th><th>Region</th><th>Role</th></tr></thead><tbody id="usersTableBody"></tbody></table></div></div>
+</section>
+<section id="section-reports" class="admin-section">
+  <div class="section-heading"><div><span class="eyebrow">INSIGHTS & REPORTING</span><h1>Reports & Analytics</h1><p>See who is using AranyaAI, where users are from, and which species they request.</p></div><button id="exportReportBtn" class="refresh-btn"><i class="fas fa-download"></i> Export CSV</button></div>
+  <div class="report-cards"><div class="admin-panel"><h3>Users by Purpose</h3><div id="purposeReport" class="metric-list"></div></div><div class="admin-panel"><h3>Users by Region</h3><div id="regionReport" class="metric-list"></div></div><div class="admin-panel"><h3>Most Active Users</h3><div id="activeUsersReport" class="metric-list"></div></div></div>
+  <div class="admin-panel"><div class="panel-heading"><div><h3>Recommendation & Plantation Report History</h3><span>Recent recorded planning events</span></div><i class="fas fa-file-lines"></i></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>User ID</th><th>Selected Species</th><th>AI Recommendations</th><th>Date</th></tr></thead><tbody id="reportsTableBody"></tbody></table></div></div>
+</section>
+<section id="section-settings" class="admin-section">
+  <div class="section-heading"><div><span class="eyebrow">ACCOUNT SECURITY</span><h1>Admin Settings</h1><p>Manage your Admin password and session securely.</p></div></div>
+  <div class="settings-grid"><div class="admin-panel settings-card"><div class="settings-icon"><i class="fas fa-lock"></i></div><h3>Change Admin Password</h3><p>Your password is stored as a salted scrypt hash; the actual password is never displayed in the database.</p><form id="passwordChangeForm"><input id="currentPassword" type="password" placeholder="Current password" required><input id="newPassword" type="password" placeholder="New password (8+ chars)" required><input id="confirmNewPassword" type="password" placeholder="Confirm new password" required><button class="btn btn-primary" type="submit">Update Password</button><div id="passwordMessage" class="form-message"></div></form></div><div class="admin-panel settings-card"><div class="settings-icon"><i class="fas fa-user-shield"></i></div><h3>Admin Account</h3><div id="adminAccountInfo" class="account-info"></div><hr><button id="settingsLogoutBtn" class="danger-btn"><i class="fas fa-right-from-bracket"></i> Logout from Admin</button></div></div>
+</section>
+</main></div></div>
+<div id="speciesEditModal" class="admin-modal"><div class="admin-modal-card"><button class="modal-close" id="closeSpeciesModal">×</button><h2 id="editSpeciesTitle">Edit Species</h2><p class="modal-note">Update the information displayed to Admins and used by the project catalog. Use a direct real-photo URL only when replacing a photo.</p><form id="speciesEditForm"><input type="hidden" id="editSpeciesName"><div class="edit-grid"><label>Growth duration (months)<input id="editDuration" type="number" min="1"></label><label>Profit / acre (₹)<input id="editProfit" type="number" min="0"></label><label>Water requirement<textarea id="editWater" rows="3"></textarea></label><label>Leaf / plant characteristics<textarea id="editLeaf" rows="3"></textarea></label><label>Climate requirement<textarea id="editClimate" rows="3"></textarea></label><label>Insect / pest information<textarea id="editInsect" rows="3"></textarea></label><label class="full">Photo URL (real photograph)<input id="editImage" type="url" placeholder="https://..."></label></div><button class="btn btn-primary btn-full" type="submit"><i class="fas fa-save"></i> Save Species</button><div id="speciesSaveMessage" class="form-message"></div></form></div></div>
+<script src="js/lang.js?v=20"></script><script src="js/admin.js?v=2"></script>
+</body></html>

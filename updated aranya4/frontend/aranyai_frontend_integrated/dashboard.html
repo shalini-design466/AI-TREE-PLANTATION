@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — AI Tree Plantation Recommendation System</title>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="vendor/chart.umd.min.js"></script>
+    <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
+    <link rel="stylesheet" href="css/style.css?v=20">
+</head>
+<body class="dashboard-page">
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>🌳 AI Tree Plantation <span>commercial</span></h1>
+                <div class="subtitle">Recommendation System</div>
+            </div>
+            <nav class="nav-tabs" id="navTabs">
+<button class="" data-page="page-home" onclick="navigateTo('page-home')"><i class="fas fa-home"></i> Home</button>
+<button class="" data-page="page-register" onclick="navigateTo('page-register')"><i class="fas fa-user-plus"></i> Register</button>
+<button class="" data-page="page-login" onclick="navigateTo('page-login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+<div class="user-session-pill" id="userSessionPill"><i class="fas fa-user-circle"></i><span id="headerUserName">User</span></div><button id="logoutBtn" class="logout-btn" type="button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+<button class="" data-page="page-catalog" onclick="navigateTo('page-catalog')"><i class="fas fa-book"></i> Species</button>
+<button class="active" data-page="page-workspace" onclick="navigateTo('page-workspace')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+</nav>
+        </header>
+        <section class="page active" id="page-workspace">
+<div class="workspace-layout"><aside class="workspace-sidebar"><div class="workspace-sidebar-title"><i class="fas fa-list-check"></i> Project Steps</div><nav class="workspace-steps" id="workspaceSteps">
+<a href="#wb-dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+<a href="#wb-top-picks"><i class="fas fa-award"></i> Top 5 by Soil</a>
+<a href="#wb-location"><i class="fas fa-map-pin"></i> Location/Input</a>
+<a href="#wb-recommendation"><i class="fas fa-brain"></i> Recommendation</a>
+<a href="#layoutCard"><i class="fas fa-th"></i> Plantation Layout</a>
+<a href="#wb-intercrop"><i class="fas fa-seedling"></i> Intercropping</a>
+<a href="#wb-care"><i class="fas fa-hand-holding-seedling"></i> Tree Details/Care</a>
+<a href="#wb-report"><i class="fas fa-file-pdf"></i> Report</a>
+<a href="#wb-compare"><i class="fas fa-chart-bar"></i> Compare</a>
+<a href="#wb-impact"><i class="fas fa-globe-americas"></i> Impact</a>
+</nav></aside><main class="workspace-main"><div class="workspace-flow">
+<div class="dashboard-hero" id="dashboardHero">
+  <div>
+    <h2 id="dashboardWelcome">Welcome back!</h2>
+    <p>Let's find the perfect trees for a greener and healthier future.</p>
+    <div class="hero-pill"><i class="fas fa-seedling"></i> <span id="dashboardContext">Personalized plantation planning</span></div>
+  </div>
+</div>
+<!-- 1. DASHBOARD (empty until a recommendation exists) -->
+<div class="workspace-block" id="wb-dashboard">
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">1</span> Dashboard</div>
+<div class="dash-empty" id="dashEmpty"><i class="fas fa-seedling"></i><h4>Your dashboard is empty for now</h4><p>You have not entered any plantation details yet. Fill in <strong>Step 3 — Location, Soil &amp; Plantation Inputs</strong> below and click <strong>Analyze Soil &amp; Recommend</strong>. Your own numbers, species and graph will appear here.</p><a class="btn btn-primary" href="#wb-location"><i class="fas fa-arrow-down"></i> Start with my land details</a></div>
+<div id="dashContent" style="display:none">
+<div class="grid-3">
+<div class="dashboard-stat"><h3 id="dashTrees">0</h3><span>Total trees planned</span></div>
+<div class="dashboard-stat"><h3 id="dashAcres">0</h3><span>Acres planted</span></div>
+<div class="dashboard-stat"><h3 id="dashRevenue">₹ 0</h3><span>Projected revenue</span></div>
+</div>
+<div class="dash-species" id="dashSpecies"></div>
+<div class="dash-chart-title" id="dashChartTitle"></div>
+<div class="dash-chart-wrap"><canvas height="100" id="dashChart"></canvas></div>
+<p class="dash-note" id="dashNote"></p>
+</div>
+</div>
+</div>
+<!-- 2. LOCATION / INPUT (always open — this is where the recommendation is created) -->
+<!-- SOIL-WISE TOP 5 RECOMMENDATIONS -->
+<div class="workspace-block" id="wb-top-picks">
+<div class="card top-picks-dashboard-card">
+<div class="workspace-block-title"><span class="step-num">2</span> Top 5 Tree Recommendations by Soil Type</div>
+<p class="section-helper">Compare the five strongest commercial tree choices for each soil type. Recommendations are based on the species data in this project.</p>
+<div id="soilTopPicksDashboard"></div>
+</div>
+</div>
+<!-- 3. LOCATION / INPUT -->
+<div class="workspace-block" id="wb-location">
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">3</span> Location, Soil &amp; Plantation Inputs</div>
+<p class="layout-note">Fill in everything about your land on this one page — soil, climate, where you'll plant, land size and spacing — then use either button below. <strong>Analyze Soil &amp; Recommend</strong> suggests species for your soil/climate/space. <strong>Calculate Plantation</strong> works out rows, tree count and spacing for whichever species you pick. You can use them in either order.</p>
+<div class="grid-2">
+<div class="input-group">
+<label>📍 Region / State</label>
+<select id="regionSelect" required="">
+<option value="">Select region</option>
+<option value="tropical">Tropical (Kerala, Tamil Nadu)</option>
+<option value="subtropical">Subtropical (Uttar Pradesh, West Bengal)</option>
+<option value="arid">Arid (Rajasthan, Gujarat)</option>
+<option value="semi_arid">Semi-Arid (Maharashtra, Telangana)</option>
+<option value="coastal">Coastal (Konkan, Odisha)</option>
+<option value="temperate_hill">Temperate / Hill (Himachal, Uttarakhand)</option>
+</select>
+<div class="field-error" id="regionSelectError"></div>
+</div>
+<div class="input-group">
+<label>🧪 Soil Type</label>
+<select id="soilSelect" required="">
+<option value="">Select soil type</option>
+<option value="Alluvial">Alluvial</option>
+<option value="Laterite">Laterite</option>
+<option value="Loamy">Loamy</option>
+<option value="Red loam">Red loam</option>
+<option value="Rocky">Rocky</option>
+<option value="Sandy loam">Sandy loam</option>
+</select>
+<div class="field-error" id="soilSelectError"></div>
+</div>
+<div class="input-group">
+<label>🌡️ Avg Temperature (°C)</label>
+<input id="tempInput" max="55" min="-10" placeholder="e.g. 28" step="0.1" type="number"/>
+<div class="field-error" id="tempInputError"></div>
+</div>
+<div class="input-group">
+<label>💧 Annual Rainfall (mm)</label>
+<input id="rainInput" max="6000" min="0" placeholder="e.g. 1500" step="1" type="number"/>
+<div class="field-error" id="rainInputError"></div>
+</div>
+<div class="input-group sr-only-field">
+<label>🧪 Soil pH</label>
+<input id="phInput" max="14" min="0" placeholder="e.g. 6.5" step="0.01" type="number"/>
+<div class="field-error" id="phInputError"></div>
+</div>
+<div class="input-group sr-only-field"><label>🌿 Nitrogen (N)</label><input id="nInput" max="1000" min="0" placeholder="e.g. 50" step="0.1" type="number"/><div class="field-error" id="nInputError"></div></div>
+<div class="input-group sr-only-field"><label>🌱 Phosphorus (P)</label><input id="pInput" max="1000" min="0" placeholder="e.g. 40" step="0.1" type="number"/><div class="field-error" id="pInputError"></div></div>
+<div class="input-group sr-only-field"><label>🥬 Potassium (K)</label><input id="kInput" max="1000" min="0" placeholder="e.g. 20" step="0.1" type="number"/><div class="field-error" id="kInputError"></div></div>
+<p class="soil-auto-note"><i class="fas fa-flask"></i> Soil pH and N-P-K are filled in automatically from typical values for your selected soil type, so you don't need a lab report to get a recommendation. <button type="button" id="soilAutoToggle" class="link-btn">Show / edit these values</button></p>
+<div class="input-group">
+<label>📍 Where will you actually plant?</label>
+<select id="plantingSpaceInput">
+<option value="open_farm">Open farm / large plot</option>
+<option value="small_backyard">Small backyard / home garden</option>
+<option value="terrace_container">Terrace / balcony (containers only)</option>
+</select>
+<div class="field-error" id="plantingSpaceInputError"></div>
+<span class="field-hint">This also decides which species you're allowed to pick below — e.g. Coconut and Tea won't be shown for a terrace.</span>
+</div>
+<div class="input-group"><label>📏 Land length (ft)</label><input id="landLength" min="1" step="1" type="number" placeholder="e.g. 60"/></div>
+<div class="input-group"><label>📐 Land width (ft)</label><input id="landWidth" min="1" step="1" type="number" placeholder="e.g. 40"/></div>
+<div class="input-group"><label>🌲 Tree-to-tree spacing (ft)</label><input id="treeSpacing" max="100" min="0.5" step="0.5" type="number" placeholder="Recommended automatically"/><span class="field-hint" id="treeSpacingHint">Pick your trees below — the best spacing is filled in for you.</span></div>
+<div class="input-group"><label>↔️ Row-to-row spacing (ft)</label><input id="rowSpacing" max="100" min="0.5" step="0.5" type="number" placeholder="Recommended automatically"/><span class="field-hint" id="rowSpacingHint">Pick your trees below — the best spacing is filled in for you.</span></div>
+<div class="input-group"><label>🚜 Boundary / access gap (ft)</label><input id="boundaryGap" max="30" min="0" step="0.5" type="number" value="2"/></div>
+</div>
+<div class="spacing-advice" id="spacingAdvice"></div>
+<div class="plot-limit-note" id="plotLimitNote"></div>
+<div class="field-error" id="locationValidationError"></div>
+<div class="soil-preview" id="soilPreview">
+<img alt="Soil type preview" data-soil-name="" id="soilPreviewImg" loading="lazy"/>
+<div class="soil-preview-text">
+<strong id="soilPreviewName">No soil selected</strong>
+<span id="soilPreviewDesc"></span>
+</div>
+</div>
+<div class="action-row">
+<button class="btn btn-primary" id="analyzeSoilBtn"><i class="fas fa-microscope"></i> Analyze Soil &amp; Recommend</button>
+<button class="btn btn-primary" id="calcTreesBtn"><i class="fas fa-calculator"></i> Calculate Plantation</button>
+<div class="badge result-badge" id="soilResult"></div>
+</div>
+<div class="location-recommendations" id="locationRecommendations"></div>
+<div class="input-group species-picker-group" style="margin-top:1rem"><label>🌳 Selected commercial tree(s)</label>
+<div class="species-picker" id="calcSpeciesPicker" role="group" aria-label="Select commercial species"></div>
+<select id="calcSpecies" multiple size="6" hidden aria-hidden="true" tabindex="-1"></select>
+<div class="species-picker-status" id="calcSpeciesStatus" aria-live="polite">No species selected yet</div>
+<span class="field-hint">Click a species name to select it, and click it again to unselect. Species marked <strong>★ AI</strong> are the ones the AI recommended for your soil — they are added automatically and always appear in your plantation layout together with the commercial species you pick. Only species suited to your planting space are shown. How many species you can pick depends on your plot size (for example a 20 × 20 ft plot allows at most 5).</span></div>
+<div class="calculator-results result-stats">
+<div class="dashboard-stat"><span class="badge">🌳 Estimated trees</span><h3 id="treeCountResult">0</h3></div>
+<div class="dashboard-stat"><span class="badge">📏 Rows</span><h3 id="rowCountResult">0</h3></div>
+<div class="dashboard-stat"><span class="badge">🌱 Trees / row</span><h3 id="treesPerRowResult">0</h3></div>
+<div class="dashboard-stat"><span class="badge">📐 Land area</span><h3 id="totalArea">0 sq ft</h3></div>
+<div class="dashboard-stat"><span class="badge">↔️ Inter-row space</span><h3 id="interRowResult">0 ft</h3></div>
+<div class="dashboard-stat"><span class="badge">🌲 Tree spacing</span><h3 id="spacingResult">0 × 0 ft</h3></div>
+</div>
+</div>
+</div>
+<!-- 4. RECOMMENDATION (gated) — explainable AI + layout + intercrop -->
+<div class="workspace-block needs-recommendation" id="wb-recommendation">
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">4</span> Explainable AI — Why this tree?</div>
+<div class="grid-2" id="explainGrid">
+<div class="explain-box">
+<h4>🌳 Teak <span class="tree-tag">recommended</span></h4>
+<p><strong>Why:</strong> High commercial value, durable wood. Soil: loamy, pH 6.5–7.5. Rainfall 1200–2500mm. Growth: 20–30 yrs.</p>
+</div>
+<div class="explain-box">
+<h4>🌳 Sandalwood <span class="tree-tag">recommended</span></h4>
+<p><strong>Why:</strong> High essential oil value. Prefers well-drained soil, pH 6.0–7.5. Rainfall 600–1600mm.</p>
+</div>
+</div>
+<div class="ai-reasoning">
+<i class="fas fa-lightbulb"></i>
+<strong>AI reasoning:</strong> Based on your location, the model weights soil type, climate, and market demand to rank commercial species.
+                        </div>
+</div>
+<div class="card" id="layoutCard">
+<div class="workspace-block-title layout-title-row"><span class="step-num">4b</span> Smart Plantation Layout
+<div class="layout-tabs" role="tablist" aria-label="Layout views">
+<button type="button" class="layout-tab active" data-view="grid4x4" role="tab" aria-selected="true">🧩 4×4 Grid Model</button>
+<button type="button" class="layout-tab" data-view="farm" role="tab" aria-selected="false">🌳 Layered farm view</button>
+<button type="button" class="layout-tab" data-view="grid" role="tab" aria-selected="false">▦ Tree grid</button>
+<button type="button" class="layout-tab" data-view="ref" role="tab" aria-selected="false">🖼 Reference model</button>
+</div></div>
+<div class="layout-view active" id="layoutViewGrid4x4">
+<p class="layout-note"><strong>This layout uses the AI-recommended species (★ AI) plus the commercial species you selected.</strong> AranyaAI fills the grid cells (sized from your tree and row spacing, in feet) with exactly those trees, repeating them across your plot.</p>
+<div id="grid4Steps" class="g4-steps"></div>
+<button type="button" id="grid4GenerateBtn" class="btn-primary"><i class="fas fa-th"></i> Generate 4×4 Layout</button>
+<div id="grid4Output" style="margin-top:1.2rem"></div>
+</div>
+<div class="layout-view" id="layoutViewFarm"><p class="layout-note">Your plot drawn as a layered farm: each species (AI-recommended + your selected ones) gets its own row-band, and intercrops are shown between the tree rows. Pick species above and click <strong>Calculate Plantation</strong>. The drawing is a simple sketch, not to scale.</p><div id="layeredFarm"><div class="lf-empty">Select one or more species above and click <strong>Calculate Plantation</strong> to see your layered farm.</div></div></div>
+<div class="layout-view" id="layoutViewGrid">
+<p class="layout-note">Each cell represents one calculated main planting position. If the selected species uses a support/host plant, AranyaAI shows it separately so the main-tree count remains accurate. <button type="button" id="layoutViewToggle" class="layout-view-toggle" aria-pressed="false">🧊 View as 3D field</button></p>
+<div class="layout-grid" id="layoutGrid"></div>
+<div id="layoutSupportInfo"></div>
+</div>
+<div class="layout-view" id="layoutViewRef"><p class="layout-note">Reference: the AI-recommended species (★ AI) and your selected commercial trees used in your layouts, with their spacing in feet.</p><div id="selectedReferenceSpecies" class="selected-reference-grid"></div></div>
+</div>
+<div class="card" id="wb-intercrop">
+<div class="workspace-block-title"><span class="step-num">4c</span> Intercropping — what can be planted?</div>
+<p>Suitable intercrops for the species you selected in the calculator, taken from each species guide. Photos are real photographs loaded from Wikipedia.</p>
+<div id="intercropPlan"><div class="lf-empty">Select one or more species in the calculator above to see suitable intercrops with photos.</div></div>
+<div class="explain-box" style="margin-top:1rem"><i class="fas fa-info-circle"></i> Intercropping with compatible short-duration or shade-tolerant crops adds income and uses the space between rows. For most timber trees this works only in the early years, while the canopy is still open.</div>
+</div>
+<div class="card" id="growthPanelCard">
+<div class="workspace-block-title"><span class="step-num">4d</span> Growth Requirements Panel</div>
+<p>What your four-layer mixed plantation needs to grow — sunlight, water, height, spacing and site fit — calculated live from your land size, soil, climate and the four species chosen in the Smart Plantation Layout above. It updates as you change anything; there is nothing to generate.</p>
+<div class="sp-inputs">
+<div class="input-group"><label>☀️ Average direct sunlight (hours/day)</label>
+<input type="range" id="gpSunlight" min="0" max="12" step="0.5" value="6">
+<span id="gpSunlightLabel" class="sp-range-label">6 h/day</span></div>
+<div class="input-group"><label>💧 Irrigation water availability</label>
+<select id="gpWaterMode"><option value="Low">Low</option><option value="Medium" selected="">Medium</option><option value="High">High</option></select></div>
+<div class="input-group"><label>💧 Or exact water available (L/day, optional)</label>
+<input type="number" id="gpWaterOverride" min="0" step="100" placeholder="Leave blank to use Low/Medium/High"></div>
+</div>
+<div id="gpHeights" class="sp-heights" style="margin-top:.75rem"></div>
+<div id="growthPanelOutput" style="margin-top:1.2rem"></div>
+</div>
+</div>
+<!-- 5. TREE DETAILS / CARE (gated) — planting guide + care -->
+<div class="workspace-block needs-recommendation" id="wb-care">
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">5</span> Step-by-step Planting Guide</div>
+<p class="section-helper">This guide is generated from the <strong>AI-recommended and selected commercial trees</strong> above. Each species gets its own planting, spacing, establishment and first-season notes.</p>
+<div id="selectedPlantingGuide" class="selected-care-grid"><div class="lf-empty">Select commercial species and calculate the plantation to generate the guide.</div></div>
+</div>
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">5b</span> Care &amp; Maintenance</div>
+<p class="section-helper">Species-specific irrigation, nutrition, pruning, pest monitoring, root/space warnings and useful maintenance checkpoints.</p>
+<div id="selectedCareMaintenance" class="selected-care-grid"><div class="lf-empty">Your selected species care plan will appear here.</div></div>
+</div>
+</div>
+<!-- 6. REPORT (gated, generated dynamically from actual inputs) -->
+<div class="workspace-block needs-recommendation" id="wb-report">
+<div class="card">
+<div class="workspace-block-title"><span class="step-num">6</span> Plantation Report</div>
+<p><strong>AI Tree Plantation Recommendation System</strong> — your personalized commercial report</p>
+<div class="report-preview" id="reportPreview">
+<p>Complete the Location &amp; Soil Analysis above to generate your report.</p>
+</div>
+<button class="btn btn-primary pdf-btn" id="printReportBtn"><i class="fas fa-print"></i> Print / PDF</button>
+</div>
+</div>
+<!-- BONUS: COMPARE (gated) -->
+<div class="workspace-block needs-recommendation" id="wb-compare">
+<div class="card">
+<div class="workspace-block-title"><i class="fas fa-chart-bar"></i> Commercial Tree Comparison</div>
+<div class="table-responsive">
+<table class="comparison-table" id="comparisonTable">
+<thead><tr><th>Tree</th><th>Maturity (yrs)</th><th>Value (₹/ton)</th><th>Water need</th><th>ROI</th></tr></thead>
+<tbody id="comparisonBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- BONUS: IMPACT (gated) -->
+<div class="workspace-block needs-recommendation" id="wb-impact">
+<div class="card">
+<div class="workspace-block-title"><i class="fas fa-globe-americas"></i> Environmental Impact</div>
+<div class="grid-3">
+<div><span class="badge">🌳 Carbon Sequestration</span><div class="impact-meter"><div style="width:75%"></div></div><span>75% (high)</span></div>
+<div><span class="badge">💧 Water conservation</span><div class="impact-meter"><div style="width:55%"></div></div><span>55% (moderate)</span></div>
+<div><span class="badge">🌱 Biodiversity</span><div class="impact-meter"><div style="width:60%"></div></div><span>60% (good)</span></div>
+</div>
+<p class="impact-note">Commercial plantations, when managed sustainably, can improve soil health and provide habitat.</p>
+</div>
+</div>
+</div></main></div>
+</section>
+        <footer class="footer-note">🌿 AI Tree Plantation Recommendation System — Commercial plantation planning. Species photographs are linked from Wikimedia Commons; license/attribution belongs to each source file.</footer>
+    </div>
+    <script src="js/species-knowledge.js?v=20"></script>
+    <script src="js/spacing-guide.js?v=1"></script>
+    <script src="js/layered-farm.js?v=20"></script>
+    <script src="js/script.js?v=20"></script>
+    <script src="js/grid4x4.js?v=20"></script>
+    <script src="js/growth-requirements.js?v=20"></script>
+    <script src="js/chatbot.js?v=20"></script>
+    <script src="js/lang-species.js?v=20"></script>
+    <script src="js/lang.js?v=20"></script>
+</body>
+</html>

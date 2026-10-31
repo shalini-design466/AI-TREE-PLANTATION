@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tree Plantation Recommendation System</title>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="vendor/chart.umd.min.js"></script>
+    <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
+    <link rel="stylesheet" href="css/style.css?v=20">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>🌳 AI Tree Plantation <span>commercial</span></h1>
+                <div class="subtitle">Recommendation System</div>
+            </div>
+            <nav class="nav-tabs" id="navTabs">
+<button class="active" data-page="page-home" onclick="navigateTo('page-home')"><i class="fas fa-home"></i> Home</button>
+<button class="" data-page="page-register" onclick="navigateTo('page-register')"><i class="fas fa-user-plus"></i> Register</button>
+<button class="" data-page="page-login" onclick="navigateTo('page-login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+<button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+<button class="" id="catalogNavBtn" data-page="page-catalog" onclick="navigateTo('page-catalog')"><i class="fas fa-book"></i> Species</button>
+<button class="" id="dashboardNavBtn" data-page="page-workspace" onclick="navigateTo('page-workspace')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+</nav>
+        </header>
+        <section class="page active" id="page-home">
+<div class="hero-section hero-reference">
+  <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+  <div class="hero-content">
+    <div class="eyebrow"><i class="fas fa-sparkles"></i> SMART PLANTATION PLATFORM</div>
+    <h1>AI Tree Plantation <span>Recommendation System</span></h1>
+    <p class="hero-subtitle">Choose the right tree for the right soil, climate and plantation purpose with smart recommendations you can explain.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><i class="fas fa-tree"></i><span>20+ Tree Species</span></div>
+      <div class="stat-item"><i class="fas fa-brain"></i><span>AI Recommendations</span></div>
+      <div class="stat-item"><i class="fas fa-leaf"></i><span>Greener Future</span></div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary hero-main-btn" onclick="navigateToWorkspace('wb-location')"><i class="fas fa-seedling"></i> Get Started</button>
+      <button class="btn btn-outline" onclick="navigateTo('page-register')"><i class="fas fa-user-plus"></i> Create Account</button>
+    </div>
+  </div>
+  <div class="hero-image hero-tree-panel">
+    <div class="tree-image-frame">
+      <img src="assets/hero-tree.png" alt="Young tree plantation illustration"/>
+      <div class="tree-image-overlay"></div>
+      <div class="floating-mini-card mini-card-top"><i class="fas fa-leaf"></i><span>Smart Soil Match</span></div>
+      <div class="floating-mini-card mini-card-bottom"><strong>Top 3</strong><span>Model recommendations</span></div>
+    </div>
+  </div>
+</div>
+<!-- PERSONALIZED RECOMMENDATION (shown after login) -->
+<div class="card" id="myRecommendationCard" style="display:none;">
+<div class="card-title"><i class="fas fa-star"></i> My Recommendation</div>
+<p class="user-greeting" id="recoIntroText"></p>
+<div class="species-grid" id="recoSpeciesGrid"></div>
+<div class="features-grid" style="grid-template-columns:repeat(3,1fr); margin-top:1.5rem;">
+<div class="feature-card reco-card" onclick="navigateToWorkspace('wb-care')">
+<i class="fas fa-water"></i><h3>Care &amp; Maintenance</h3><p id="recoCareText">Tips for your recommended trees.</p>
+</div>
+<div class="feature-card reco-card" onclick="navigateToWorkspace('wb-care')">
+<i class="fas fa-hand-holding-seedling"></i><h3>Planting Guide</h3><p id="recoPlantingText">Step-by-step planting for your trees.</p>
+</div>
+<div class="feature-card reco-card" onclick="navigateToWorkspace('wb-recommendation')">
+<i class="fas fa-map"></i><h3>Plantation Layout</h3><p id="recoLayoutText">See your plantation grid.</p>
+</div>
+</div>
+</div>
+<!-- TOP 5 RECOMMENDATIONS PER SOIL TYPE -->
+<div class="card" id="soilTopPicksHomeCard" style="display:none">
+<div class="card-title"><i class="fas fa-award"></i> Top 5 Recommended Trees by Soil Type</div>
+<div id="soilTopPicksHome"></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><i class="fas fa-map-marked-alt"></i><h3>Location &amp; Soil</h3><p>Get personalized tree recommendations based on your region and soil type.</p></div>
+<div class="feature-card"><i class="fas fa-brain"></i><h3>Explainable AI</h3><p>Understand why each tree is recommended with transparent AI reasoning.</p></div>
+<div class="feature-card"><i class="fas fa-calculator"></i><h3>Smart Calculator</h3><p>Calculate optimal tree spacing, count, and land requirements instantly.</p></div>
+<div class="feature-card"><i class="fas fa-seedling"></i><h3>Intercropping Guide</h3><p>Discover compatible crops to plant alongside your commercial trees.</p></div>
+</div>
+<div class="quick-stats">
+<div class="stat-box"><h3>31</h3><p>Model Species</p></div>
+<div class="stat-box"><h3>7</h3><p>Model Inputs</p></div>
+<div class="stat-box"><h3>Top 3</h3><p>Recommendations</p></div>
+<div class="stat-box"><h3>24/7</h3><p>Digital Guidance</p></div>
+</div>
+</section>
+        <footer class="footer-note">🌿 AI Tree Plantation Recommendation System — Commercial plantation planning. Species photographs are linked from Wikimedia Commons; license/attribution belongs to each source file.</footer>
+    </div>
+    <script src="js/species-knowledge.js?v=20"></script>
+    <script src="js/spacing-guide.js?v=1"></script>
+    <script src="js/lang-species.js?v=20"></script>
+    <script src="js/lang.js?v=20"></script>
+    <script src="js/script.js?v=20"></script>
+    <script src="js/chatbot.js?v=20"></script>
+</body>
+</html>

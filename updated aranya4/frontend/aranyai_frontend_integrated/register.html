@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — AI Tree Plantation Recommendation System</title>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="vendor/chart.umd.min.js"></script>
+    <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
+    <link rel="stylesheet" href="css/style.css?v=20">
+    <link rel="stylesheet" href="css/theme.css?v=4">
+</head>
+<body class="theme-std">
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>🌳 AI Tree Plantation <span>commercial</span></h1>
+                <div class="subtitle">Recommendation System</div>
+            </div>
+            <nav class="nav-tabs" id="navTabs">
+<button class="" data-page="page-home" onclick="navigateTo('page-home')"><i class="fas fa-home"></i> Home</button>
+<button class="active" data-page="page-register" onclick="navigateTo('page-register')"><i class="fas fa-user-plus"></i> Register</button>
+<button class="" data-page="page-login" onclick="navigateTo('page-login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+<button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+<button class="" id="catalogNavBtn" data-page="page-catalog" onclick="navigateTo('page-catalog')"><i class="fas fa-book"></i> Species</button>
+<button class="" id="dashboardNavBtn" data-page="page-workspace" onclick="navigateTo('page-workspace')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+</nav>
+        </header>
+        <section class="page active" id="page-register">
+<div class="card auth-card">
+<div class="card-title"><i class="fas fa-user-plus"></i> Create Account</div>
+<form class="auth-form" id="registerForm">
+<div class="input-group">
+<label><i class="fas fa-user"></i> Full Name</label>
+<input id="regName" placeholder="Enter your full name" required="" type="text"/>
+<div class="field-error" id="regNameError"></div>
+</div>
+<div class="input-group">
+<label><i class="fas fa-envelope"></i> Email Address</label>
+<input id="regEmail" placeholder="Enter your email" required="" type="email"/>
+<div class="field-error" id="regEmailError"></div>
+</div>
+
+<div class="input-group">
+<label><i class="fas fa-lock"></i> Password</label>
+<div class="password-field-wrap">
+<input id="regPassword" autocomplete="new-password" placeholder="Create a strong password" required="" type="password"/>
+<button class="toggle-password" data-target="regPassword" type="button"><i class="fas fa-eye"></i></button>
+</div>
+<ul class="pw-rules" id="pwRules" aria-live="polite">
+<li data-rule="length"><i class="fas fa-circle"></i> At least 8 characters</li>
+<li data-rule="upper"><i class="fas fa-circle"></i> One uppercase letter (A-Z)</li>
+<li data-rule="lower"><i class="fas fa-circle"></i> One lowercase letter (a-z)</li>
+<li data-rule="special"><i class="fas fa-circle"></i> One special character (e.g. @ # $ % !)</li>
+</ul>
+<div class="field-error" id="regPasswordError"></div>
+</div>
+<div class="input-group">
+<label><i class="fas fa-lock"></i> Confirm Password</label>
+<div class="password-field-wrap">
+<input id="regConfirmPassword" placeholder="Confirm password" required="" type="password"/>
+<button class="toggle-password" data-target="regConfirmPassword" type="button"><i class="fas fa-eye"></i></button>
+</div>
+<div class="field-error" id="regConfirmError"></div>
+</div>
+<div class="input-group">
+<label><i class="fas fa-bullseye"></i> Purpose of Plantation</label>
+<select id="regPurpose" required="">
+<option value="">Select your purpose</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Terrace Gardening">Terrace Gardening</option>
+<option value="Commercial Business">Commercial Business</option>
+<option value="Home Gardening">Home Gardening</option>
+<option value="Environmental Plantation">Environmental Plantation</option>
+<option value="Other">Other</option>
+</select>
+<div class="field-error" id="regPurposeError"></div>
+</div>
+<button class="btn btn-primary btn-full" type="submit"><i class="fas fa-user-plus"></i> Register</button>
+<p class="auth-switch">Already have an account? <a href="#" onclick="navigateTo('page-login')">Login here</a></p>
+</form>
+</div>
+</section>
+        <footer class="footer-note">🌿 AI Tree Plantation Recommendation System — Commercial plantation planning. Species photographs are linked from Wikimedia Commons; license/attribution belongs to each source file.</footer>
+    </div>
+    <script src="js/species-knowledge.js?v=20"></script>
+    <script src="js/spacing-guide.js?v=1"></script>
+    <script src="js/lang.js?v=20"></script>
+    <script src="js/script.js?v=20"></script>
+    <script src="js/chatbot.js?v=20"></script>
+</body>
+</html>
